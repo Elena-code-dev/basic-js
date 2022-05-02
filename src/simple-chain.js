@@ -5,26 +5,48 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
-  getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  },
-  finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+  arr: [],
+  position: 0,
+
+            getLength() {
+                return this.position;
+            },
+            addLink(value) {
+                if(value !== '') {
+                    value = String(value)
+                    this.position++;
+                    this.arr.push(`( ${value} )`)
+                    
+                    return this; 
+                } else {
+                    return this;
+                }                       
+            },
+            removeLink(position) {
+              if(typeof position !== 'number' || !(Number.isInteger(position)) || position <= 0 || position > this.arr.length) {
+                this.arr = [];
+                this.position = 0;
+                throw new Error("You can't remove incorrect link!");
+                
+            }  else {
+                this.position--;
+                this.arr.splice(position-1, 1);
+                
+                return this;
+            }             
+            },
+            reverseChain() {
+               
+                this.arr.reverse();
+                
+                return this;
+            },
+            finishChain() {
+              let str = this.arr.join('~~');
+              this.arr = [];
+              this.position = 0;
+              return str;
+            }
 };
 
 module.exports = {
